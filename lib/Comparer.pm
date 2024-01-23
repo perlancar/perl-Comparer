@@ -77,19 +77,55 @@ use to generate a comparer.
 
 =head1 SEE ALSO
 
-Base specifications: L<DefHash>, L<Sah>.
+=head2 Base specifications
 
-Related: L<Sorter>
+L<DefHash>
 
-Previous incarnation: L<Sort::Sub>. C<Sorter> and C<Comparer> are meant to
-eventually supersede Sort::Sub. The main improvement upon Sort::Sub is the split
-into three kinds of subroutines: 1) a sorter (a subroutine that accepts a list
-of items to sort), where C<Sorter::*> modules are meant to generate; 2) a
-keymaker (a subroutine that converts an item to a string/numeric key suitable
-for simple comparison using C<eq> or C<==> during sorting); you can use
-C<Data::Sah::Value::perl::KeyMaker> namespace for this; and 3) comparer (a
-subroutine that compares two items that can be used in C<sort()>), where
-C<Comparer::*> modules are meant to generate. Perl's C<sort()> allows us to
-specify a comparer, but oftentimes it's more efficient to sort by key using a
-keymaker, and sometimes due to preprocessing and/or postprocessing it's more
-suitable to use the more generic C<sorter> interface.
+L<Sah>
+
+=head2 Related specifications
+
+L<Sorter>
+
+L<SortKey>
+
+=head2 Previous incarnation
+
+L<Sort::Sub>
+
+C<Sorter>, C<SortKey>, and C<Comparer> are meant to eventually supersede
+Sort::Sub. The main improvement over Sort::Sub is the split into three kinds of
+subroutines:
+
+=over
+
+=item 1. sorter
+
+A subroutine that accepts a list of items to sort.
+
+C<Sorter::*> modules are meant to generate sorters.
+
+=item 2. sort key generator
+
+A subroutine that converts an item to a string/numeric key suitable for simple
+comparison using C<eq> or C<==> during sorting.
+
+C<SortKey::*> modules are meant to generate sort key generators.
+
+=item 3. comparer
+
+A subroutine that compares two items. Can be used in C<sort()> as custom sort
+block.
+
+C<Comparer::*> modules are meant to generate comparers.
+
+Perl's C<sort()>, as mentioned above, allows us to specify a comparer, but
+oftentimes it's more efficient to sort by key using key generator, where the
+keys are often cached. And sometimes due to preprocessing and/or postprocessing
+it's more suitable to use the more generic sorter interface.
+
+=back
+
+Aside from the above, C<Comparer> also makes Sort::Sub's special arguments
+C<reverse> and C<is_ci> become ordinary arguments, because they are not always
+applicable in all situation, especially C<is_ci>.
