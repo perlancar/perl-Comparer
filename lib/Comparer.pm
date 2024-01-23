@@ -19,7 +19,7 @@ package Comparer;
 Basic:
 
  use Comparer::naturally;
- my $cmp = Comparer::naturally->new;
+ my $cmp = Comparer::naturally::gen_comparer;
 
  my @sorted = sort { $cmp->($a,$b) } ('track1.mp3', 'track10.mp3', 'track2.mp3', 'track1b.mp3', 'track1a.mp3');
  # => ('track1.mp3', 'track1a.mp3', 'track1b.mp3', 'track2.mp3', 'track10.mp3')
@@ -27,7 +27,7 @@ Basic:
 Specifying arguments:
 
  use Comparer::naturally;
- my $cmp = Comparer::naturally->new(reverse => 1);
+ my $cmp = Comparer::naturally::gen_comparer(reverse => 1);
  my @sorted = sort { $cmp->($a,$b) } ...;
 
 Specifying comparer on the command-line (for other CLI's):
